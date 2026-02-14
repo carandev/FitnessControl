@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessControl.WorkoutPage"
+             Title="Rutinas"
+             BackgroundColor="#F8F9FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Rutinas de la semana" FontSize="24" FontAttributes="Bold" TextColor="#2D3436"/>
+            
+            <HorizontalStackLayout x:Name="DayButtons" Spacing="8"/>
+            
+            <Border x:Name="RoutineInfo" Background="#FFFFFF" CornerRadius="12" Padding="16">
+                <VerticalStackLayout>
+                    <Label x:Name="RoutineNameLabel" Text="" FontSize="20" FontAttributes="Bold" TextColor="#2D3436"/>
+                    <Label x:Name="RoutineDescLabel" Text="" FontSize="14" TextColor="#636E72" Margin="0,4,0,0"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button x:Name="StartButton" Text="Iniciar Entrenamiento" 
+                    BackgroundColor="#A8E6CF" TextColor="#2D3436" FontAttributes="Bold"
+                    CornerRadius="12" Padding="16"/>
+
+            <Button x:Name="FinishButton" Text="Finalizar Entrenamiento" 
+                    BackgroundColor="#FF8B94" TextColor="White" FontAttributes="Bold"
+                    CornerRadius="12" Padding="16" IsVisible="False"/>
+
+            <Label Text="Ejercicios" FontSize="18" FontAttributes="Bold" TextColor="#2D3436" Margin="0,8,0,0"/>
+            <VerticalStackLayout x:Name="ExerciseList"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

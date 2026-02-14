@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FitnessControl.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FitnessControl"
+    Title="FitnessControl"
+    BackgroundColor="#F8F9FA">
+
+    <ShellContent Title="Inicio" ContentTemplate="{DataTemplate local:MainPage}" />
+    <ShellContent Title="Rutinas" ContentTemplate="{DataTemplate local:WorkoutPage}" />
+    <ShellContent Title="Progreso" ContentTemplate="{DataTemplate local:ProgressPage}" />
+    <ShellContent Title="Historial" ContentTemplate="{DataTemplate local:HistoryPage}" />
+    <ShellContent Title="Perfil" ContentTemplate="{DataTemplate local:ProfilePage}" />
+
+</Shell>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessControl.MainPage"
+             Title="Inicio"
+             BackgroundColor="#F8F9FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <Label Text="FitnessControl" FontSize="28" FontAttributes="Bold" TextColor="#2D3436"/>
+            
+            <Frame BackgroundColor="#FFFFFF" CornerRadius="12" Padding="16" Margin="0">
+                <VerticalStackLayout>
+                    <Label Text="HOY" FontSize="14" TextColor="#636E72"/>
+                    <Label x:Name="RoutineNameLabel" Text="" FontSize="20" FontAttributes="Bold" TextColor="#2D3436"/>
+                    <Label x:Name="RoutineDescLabel" Text="" FontSize="14" TextColor="#636E72" Margin="0,4,0,0"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout Spacing="12">
+                <Frame BackgroundColor="#A8E6CF" CornerRadius="12" Padding="16">
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label x:Name="StreakLabel" Text="0" FontSize="28" FontAttributes="Bold" TextColor="#2D3436" HorizontalOptions="Center"/>
+                        <Label Text="Días seguidos" FontSize="12" TextColor="#636E72" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame BackgroundColor="#A8D8EA" CornerRadius="12" Padding="16">
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label x:Name="TotalLabel" Text="0" FontSize="28" FontAttributes="Bold" TextColor="#2D3436" HorizontalOptions="Center"/>
+                        <Label Text="Entrenamientos" FontSize="12" TextColor="#636E72" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </HorizontalStackLayout>
+
+            <Label Text="Ejercicios de hoy" FontSize="18" FontAttributes="Bold" TextColor="#2D3436" Margin="0,8,0,0"/>
+            <VerticalStackLayout x:Name="ExerciseList"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

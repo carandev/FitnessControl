@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessControl.ProfilePage"
+             Title="Perfil"
+             BackgroundColor="#F8F9FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Mi Perfil" FontSize="24" FontAttributes="Bold" TextColor="#2D3436"/>
+
+            <Border Background="#FFFFFF" CornerRadius="12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Nombre" FontSize="14" TextColor="#636E72"/>
+                    <Entry x:Name="NameEntry" BackgroundColor="#F8F9FA"/>
+                    
+                    <Label Text="Edad" FontSize="14" TextColor="#636E72"/>
+                    <Entry x:Name="AgeEntry" Keyboard="Numeric" BackgroundColor="#F8F9FA"/>
+                    
+                    <Label Text="Altura (cm)" FontSize="14" TextColor="#636E72"/>
+                    <Entry x:Name="HeightEntry" Keyboard="Numeric" BackgroundColor="#F8F9FA"/>
+                    
+                    <Label Text="Peso (kg)" FontSize="14" TextColor="#636E72"/>
+                    <Entry x:Name="WeightEntry" Keyboard="Numeric" BackgroundColor="#F8F9FA"/>
+
+                    <Button x:Name="SaveButton" Text="Guardar Cambios" 
+                            BackgroundColor="#A8E6CF" TextColor="#2D3436" 
+                            FontAttributes="Bold" CornerRadius="8" 
+                            Clicked="SaveButton_Clicked"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Background="#FFEAA7" CornerRadius="12" Padding="16">
+                <VerticalStackLayout>
+                    <Label Text="Objetivo" FontSize="16" FontAttributes="Bold" TextColor="#2D3436"/>
+                    <Label x:Name="GoalLabel" Text="Perder grasa y ganar músculo" FontSize="14" TextColor="#636E72" Margin="0,4,0,0"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Notificaciones" FontSize="20" FontAttributes="Bold" TextColor="#2D3436" Margin="0,8,0,0"/>
+
+            <Border Background="#FFFFFF" CornerRadius="12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <HorizontalStackLayout>
+                        <Label Text="Activar recordatorios" FontSize="16" TextColor="#2D3436" VerticalOptions="Center"/>
+                        <Switch x:Name="NotificationSwitch" Toggled="NotificationSwitch_Toggled" HorizontalOptions="End"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="Hora del recordatorio" FontSize="14" TextColor="#636E72"/>
+                    <TimePicker x:Name="NotificationTimePicker" Format="HH:mm" BackgroundColor="#F8F9FA"/>
+
+                    <Label Text="Tipo de recordatorio" FontSize="14" TextColor="#636E72"/>
+                    
+                    <RadioButton x:Name="DailyRadio" Content="Diario" GroupName="ReminderType" IsChecked="True" CheckedChanged="ReminderType_Changed"/>
+                    <RadioButton x:Name="WorkoutDaysRadio" Content="Solo días de entrenamiento" GroupName="ReminderType" CheckedChanged="ReminderType_Changed"/>
+
+                    <Button x:Name="SaveNotificationsButton" Text="Guardar Notificaciones" 
+                            BackgroundColor="#A8D8EA" TextColor="#2D3436" 
+                            FontAttributes="Bold" CornerRadius="8" 
+                            Clicked="SaveNotifications_Clicked"/>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

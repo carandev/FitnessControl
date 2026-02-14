@@ -1,0 +1,29 @@
+# Build results
+bin/
+obj/
+
+# .NET
+*.dll
+*.exe
+*.pdb
+*.nupkg
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Android
+*.apk
+*.aab
+*.dex
+local.properties
+
+# Logs
+*.log

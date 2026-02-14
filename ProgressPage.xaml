@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessControl.ProgressPage"
+             Title="Progreso"
+             BackgroundColor="#F8F9FA">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
+            <Label Text="Seguimiento de Progreso" FontSize="24" FontAttributes="Bold" TextColor="#2D3436"/>
+
+            <Border x:Name="BMIFrame" Background="#A8D8EA" CornerRadius="12" Padding="16">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="40">
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label x:Name="BMILabel" Text="0" FontSize="32" FontAttributes="Bold" TextColor="#2D3436" HorizontalOptions="Center"/>
+                        <Label Text="IMC" FontSize="14" TextColor="#636E72" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout HorizontalOptions="Center">
+                        <Label x:Name="BMICategory" Text="Normal" FontSize="18" FontAttributes="Bold" TextColor="#2D3436" HorizontalOptions="Center"/>
+                        <Label x:Name="WeightLabel" Text="80 kg" FontSize="14" TextColor="#636E72" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
+
+            <Label Text="Registrar Peso" FontSize="18" FontAttributes="Bold" TextColor="#2D3436"/>
+            
+            <Border Background="#FFFFFF" CornerRadius="12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Entry x:Name="WeightEntry" Placeholder="Peso en kg" Keyboard="Numeric" BackgroundColor="#F8F9FA"/>
+                    <Button Text="Guardar Peso" BackgroundColor="#A8E6CF" TextColor="#2D3436" FontAttributes="Bold" CornerRadius="8" Clicked="SaveWeight_Clicked"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Historial de Peso" FontSize="18" FontAttributes="Bold" TextColor="#2D3436"/>
+            <VerticalStackLayout x:Name="WeightHistoryList"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
