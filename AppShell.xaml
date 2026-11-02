@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="FitControl.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FitControl"
+    Title="FitControl - Bajar de Peso">
+
+    <ShellContent>
+        <ContentPage>
+            <Grid BackgroundColor="#1A1A2E">
+                
+                <!-- Pantalla Principal - NO en rutina -->
+                <ScrollView IsVisible="{Binding SesionEnCurso, Converter={StaticResource InverseBoolConverter}}">
+                    <StackLayout Padding="20" Spacing="20">
+                        
+                        <!-- Header -->
+                        <StackLayout>
+                            <Label Text="FitControl" FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                            <Label Text="Rutina diaria para bajar de peso" FontSize="14" TextColor="#888"/>
+                        </StackLayout>
+                        
+                        <!-- Racha -->
+                        <Frame BackgroundColor="#FF6B35" CornerRadius="20" Padding="20">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="🔥 " FontSize="32"/>
+                                <StackLayout>
+                                    <Label Text="{Binding RachaDias, StringFormat='{}{0}'}" FontSize="48" FontAttributes="Bold" TextColor="White"/>
+                                    <Label Text="días consecutivos" FontSize="14" TextColor="#FFDDD"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                        
+                        <!-- Estado de hoy -->
+                        <Frame BackgroundColor="{Binding EjercicioCompletadoHoy, Converter={StaticResource BoolToColorConverter}}" CornerRadius="15" Padding="15">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="✅ " FontSize="20" IsVisible="{Binding EjercicioCompletadoHoy}"/>
+                                <Label Text="⏳ " FontSize="20" IsVisible="{Binding EjercicioCompletadoHoy, Converter={StaticResource InverseBoolConverter}}"/>
+                                <Label Text="{Binding EjercicioCompletadoHoy, Converter={StaticResource BoolToStatusConverter}}" FontSize="16" TextColor="White" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </Frame>
+                        
+                        <!-- Info Peso -->
+                        <Frame BackgroundColor="#16213E" CornerRadius="15" Padding="15">
+                            <Grid ColumnDefinitions="*,*,*">
+                                <StackLayout Grid.Column="0" HorizontalOptions="Center">
+                                    <Label Text="{Binding UltimoPeso, StringFormat='{}{0:F1}'}" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                                    <Label Text="kg actual" FontSize="11" TextColor="#888" HorizontalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1" HorizontalOptions="Center">
+                                    <Label Text="{Binding Imc, StringFormat='{}{0:F1}'}" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                                    <Label Text="IMC" FontSize="11" TextColor="#888" HorizontalOptions="Center"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                                    <Label Text="{Binding ImcCategoria}" FontSize="14" FontAttributes="Bold" TextColor="#4CAF50" HorizontalOptions="Center"/>
+                                    <Label Text="categoría" FontSize="11" TextColor="#888" HorizontalOptions="Center"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                        
+                        <!-- Rutina del día -->
+                        <Label Text="{Binding NombreDiaSemana, StringFormat='Rutina del {0}'}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                        <Frame BackgroundColor="#0F3460" CornerRadius="15" Padding="20">
+                            <StackLayout>
+                                <Label Text="{Binding RutinaDiaria.Nombre}" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="{Binding RutinaDiaria.Descripcion}" FontSize="13" TextColor="#AAA"/>
+                                <Label Text="{Binding RutinaDiaria.DuracionMinutos, StringFormat='Duración: {0} minutos'}" FontSize="12" TextColor="#4CAF50" Margin="0,10,0,0"/>
+                                <Label Text="{Binding RutinaDiaria.Ejercicios.Count, StringFormat='{}{0} ejercicios'}" FontSize="12" TextColor="#888"/>
+                            </StackLayout>
+                        </Frame>
+                        
+                        <!-- Botón Comenzar -->
+                        <Button Text="🚀 COMENZAR RUTINA" FontSize="18" FontAttributes="Bold" 
+                                BackgroundColor="#4CAF50" TextColor="White"
+                                HeightRequest="60" CornerRadius="30"
+                                Command="{Binding IniciarRutinaCommand}"
+                                IsVisible="{Binding EjercicioCompletadoHoy, Converter={StaticResource InverseBoolConverter}}"/>
+                        
+                        <Button Text="✅ YA COMPLETASTE HOY" FontSize="16" FontAttributes="Bold" 
+                                BackgroundColor="#333" TextColor="#4CAF50"
+                                HeightRequest="50" CornerRadius="25"
+                                IsVisible="{Binding EjercicioCompletadoHoy}"/>
+                        
+                        <!-- Actualizar peso -->
+                        <Frame BackgroundColor="#16213E" CornerRadius="15" Padding="15">
+                            <StackLayout>
+                                <Label Text="Actualizar peso" FontSize="14" TextColor="#888"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Entry Text="{Binding NuevoPesoTexto}" Keyboard="Numeric" WidthRequest="80" FontSize="18" TextColor="White"/>
+                                    <Label Text=" kg" TextColor="White" VerticalOptions="Center"/>
+                                    <Button Text="+" Command="{Binding AgregarPesoCommand}" BackgroundColor="#4CAF50" TextColor="White" WidthRequest="40" HeightRequest="40"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                        
+                        <!-- Navegación -->
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20" Margin="0,20,0,0">
+                            <Button Text="Historial" Command="{Binding MostrarHistorialCommand}" BackgroundColor="Transparent" TextColor="#888"/>
+                            <Button Text="Perfil" Command="{Binding MostrarPerfilSeccionCommand}" BackgroundColor="Transparent" TextColor="#888"/>
+                        </StackLayout>
+                        
+                    </StackLayout>
+                </ScrollView>
+                
+                <!-- Vista Historial -->
+                <ScrollView IsVisible="{Binding MostrandoHistorial}">
+                    <StackLayout Padding="20" Spacing="15">
+                        <Button Text="← Volver" Command="{Binding MostrarInicioCommand}" BackgroundColor="Transparent" TextColor="#4CAF50" HorizontalOptions="Start"/>
+                        <Label Text="Historial" FontSize="28" FontAttributes="Bold" TextColor="White"/>
+                        <ListView ItemsSource="{Binding UltimasSesiones}" BackgroundColor="Transparent" RowHeight="70">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="#16213E" CornerRadius="10" Margin="0,5" Padding="15">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout>
+                                                <Label Text="{Binding RutinaNombre}" FontAttributes="Bold" TextColor="White"/>
+                                                <Label Text="{Binding Fecha, StringFormat='{}{0:dddd, dd MMM}'}" TextColor="#888" FontSize="11"/>
+                                            </StackLayout>
+                                            <Label Grid.Column="1" Text="{Binding Duracion, StringFormat='{}{0:mm\\:ss}'}" TextColor="#4CAF50" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </ScrollView>
+                
+                <!-- Vista Perfil -->
+                <ScrollView IsVisible="{Binding MostrandoPerfil}">
+                    <StackLayout Padding="20" Spacing="15">
+                        <Button Text="← Volver" Command="{Binding MostrarInicioCommand}" BackgroundColor="Transparent" TextColor="#4CAF50" HorizontalOptions="Start"/>
+                        <Label Text="Perfil" FontSize="28" FontAttributes="Bold" TextColor="White"/>
+                        <Frame BackgroundColor="#16213E" CornerRadius="15" Padding="20">
+                            <StackLayout Spacing="15">
+                                <StackLayout>
+                                    <Label Text="Nombre" TextColor="#888" FontSize="12"/>
+                                    <Entry Text="{Binding Nombre}" TextColor="White"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="Altura (cm)" TextColor="#888" FontSize="12"/>
+                                    <Entry Text="{Binding AlturaCm}" Keyboard="Numeric" TextColor="White"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="Peso inicial (kg)" TextColor="#888" FontSize="12"/>
+                                    <Entry Text="{Binding PesoInicialKg}" Keyboard="Numeric" TextColor="White"/>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="Objetivo" TextColor="#888" FontSize="12"/>
+                                    <Picker SelectedItem="{Binding Objetivo}" TextColor="White">
+                                        <Picker.Items>
+                                            <x:String>Bajar peso y tonificar</x:String>
+                                            <x:String>Mantener peso</x:String>
+                                            <x:String>Ganar masa muscular</x:String>
+                                        </Picker.Items>
+                                    </Picker>
+                                </StackLayout>
+                                <Button Text="GUARDAR" Command="{Binding GuardarPerfilCommand}" BackgroundColor="#4CAF50" TextColor="White" HeightRequest="45"/>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </ScrollView>
+                
+                <!-- Pantalla de Ejecución de Rutina -->
+                <Grid IsVisible="{Binding SesionEnCurso}" BackgroundColor="#1A1A2E">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Header -->
+                    <StackLayout Grid.Row="0" Padding="20" Orientation="Horizontal">
+                        <Label Text="{Binding TiempoTranscurrido}" FontSize="18" TextColor="#888"/>
+                        <Label Text=" | " TextColor="#444"/>
+                        <Label Text="{Binding EjercicioActualIndex, StringFormat='Ejercicio {0}'}" TextColor="#888"/>
+                        <Label Text="{Binding RutinaDiaria.Ejercicios.Count, StringFormat=' de {0}'}" TextColor="#444"/>
+                    </StackLayout>
+                    
+                    <!-- Ejercicio Actual -->
+                    <ScrollView Grid.Row="1" Padding="20">
+                        <StackLayout Spacing="15">
+                            <!-- Tiempo Descanso -->
+                            <Frame BackgroundColor="#FF6B35" CornerRadius="15" Padding="15" IsVisible="{Binding EnDescanso}">
+                                <StackLayout>
+                                    <Label Text="{Binding TextoDescanso}" FontSize="24" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
+                                    <Button Text="Saltar descanso" Command="{Binding SaltarDescansoCommand}" BackgroundColor="White" TextColor="#FF6B35" Margin="0,10,0,0"/>
+                                </StackLayout>
+                            </Frame>
+                            
+                            <!-- Info Ejercicio -->
+                            <StackLayout IsVisible="{Binding EnDescanso, Converter={StaticResource InverseBoolConverter}}">
+                                <Label Text="{Binding EjercicioNombre}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="{Binding EjercicioDescripcion}" FontSize="16" TextColor="#888"/>
+                                
+                                <!-- Meta -->
+                                <Frame BackgroundColor="#0F3460" CornerRadius="15" Padding="20" Margin="0,15,0,0">
+                                    <Label Text="{Binding EjercicioMeta}" FontSize="20" TextColor="#4CAF50" HorizontalOptions="Center"/>
+                                </Frame>
+                                
+                                <!-- Serie (si aplica) -->
+                                <Label Text="{Binding EjercicioSerieInfo}" FontSize="16" TextColor="#FF6B35" HorizontalOptions="Center" Margin="0,10,0,0"
+                                       IsVisible="{Binding EsPorSeries}"/>
+                                
+                                <!-- Temporizador -->
+                                <Label Text="{Binding TiempoEjercicio}" FontSize="72" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" Margin="0,20,0,0"
+                                       IsVisible="{Binding EsPorTiempo}"/>
+                                
+                                <!-- Instrucciones -->
+                                <Frame BackgroundColor="#16213E" CornerRadius="15" Padding="20" Margin="0,20,0,0">
+                                    <StackLayout>
+                                        <Label Text="¿CÓMO HACERLO?" FontSize="14" FontAttributes="Bold" TextColor="#4CAF50" Margin="0,0,0,10"/>
+                                        <Label Text="{Binding EjercicioInstrucciones}" FontSize="14" TextColor="#CCC" LineHeight="1.4"/>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                    
+                    <!-- Botones -->
+                    <StackLayout Grid.Row="2" Padding="20" Spacing="10">
+                        <Button Text="SIGUIENTE EJERCICIO" FontSize="16" FontAttributes="Bold"
+                                BackgroundColor="#4CAF50" TextColor="White"
+                                HeightRequest="50" CornerRadius="25"
+                                Command="{Binding CompletarEjercicioCommand}"
+                                IsVisible="{Binding EnDescanso, Converter={StaticResource InverseBoolConverter}}"/>
+                        
+                        <Button Text="CANCELAR" FontSize="14"
+                                BackgroundColor="Transparent" TextColor="#F44336"
+                                Command="{Binding CancelarSesionCommand}"/>
+                    </StackLayout>
+                </Grid>
+                
+                <!-- Rutina Completada -->
+                <StackLayout IsVisible="{Binding RutinaCompletada}" BackgroundColor="#1A1A2E" Padding="40" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="🎉" FontSize="80" HorizontalOptions="Center"/>
+                    <Label Text="¡RUTINA COMPLETADA!" FontSize="24" FontAttributes="Bold" TextColor="#4CAF50" HorizontalOptions="Center"/>
+                    <Label Text="{Binding TiempoTranscurrido, StringFormat='Duración: {0}'}" FontSize="16" TextColor="#888" HorizontalOptions="Center" Margin="0,10,0,30"/>
+                    <Button Text="VOLVER AL INICIO" FontSize="16" FontAttributes="Bold"
+                            BackgroundColor="#4CAF50" TextColor="White"
+                            HeightRequest="50" CornerRadius="25"
+                            Command="{Binding MostrarInicioCommand}"/>
+                </StackLayout>
+                
+            </Grid>
+        </ContentPage>
+    </ShellContent>
+</Shell>
